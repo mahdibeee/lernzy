@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lernzy Extension</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="popup.css" />
+    <script src="popup.js" defer></script>
+  </head>
+  <body>
+    <div class="container pop-up-main p-3">
+      <div
+        id="error-message"
+        class="alert alert-danger"
+        style="display: none"
+      ></div>
+
+      <div
+        class="d-flex justify-content-between align-items-center mb-3 popup-header"
+      >
+        <img src="icon128.png" alt="Lernzy Logo" class="logo" />
+        <span id="savingStatus" style="display: none"
+          >Saving<span id="dots"></span
+        ></span>
+        <button
+          id="saveButton"
+          class="btn btn-outline-secondary btn-sm border-0"
+        >
+          Save
+        </button>
+        <button
+          id="removeButton"
+          class="btn btn-outline-secondary btn-sm"
+          style="display: none"
+        >
+          Remove
+        </button>
+      </div>
+      <div class="media mb-3 saved">
+        <img
+          id="contentImage"
+          src="default-thumbnail.png"
+          alt="Content Image"
+          class="mr-3 content-image"
+        />
+        <div class="media-body">
+          <h5 id="contentTitle" class="mt-0 popup-title">Title</h5>
+          <p id="contentDomain" class="text-muted">domain.com</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          id="category"
+          class="form-control"
+          placeholder="Add Category"
+        />
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          id="tags-input"
+          class="form-control"
+          placeholder="Add Tags"
+        />
+        <div id="tags-container" class="mt-2">
+          <!-- Tags will be displayed here -->
+        </div>
+      </div>
+      <div class="d-flex justify-content-between">
+        <button id="viewAllSaves" class="btn btn-link p-0 saves-list">
+          Saves
+        </button>
+        <button id="addButton" class="btn btn-link p-0 configs">Configs</button>
+      </div>
+
+      <div id="alertPlaceholder"></div>
+      <!-- Alert placeholder -->
+    </div>
+  </body>
+</html>

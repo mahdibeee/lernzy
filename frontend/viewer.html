@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Lernzy | Mahdi, Welcome to your dashboard!</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="vendors/feather/feather.css" />
+    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css" />
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css" />
+    <!-- endinject -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+    <!-- Plugin css for this page -->
+    <link
+      rel="stylesheet"
+      href="vendors/datatables.net-bs4/dataTables.bootstrap4.css"
+    />
+    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="js/select.dataTables.min.css"
+    />
+    <style>
+      .card-people {
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .card-people .image-wrapper {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .card-article-image img {
+        width: 100%;
+        display: block;
+        border-radius: 20px; /* Ensure the image itself is rounded */
+      }
+
+      .card-people .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(43, 24, 151, 0.5); /* semi-transparent black */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border-radius: 20px; /* Match the border radius of the image */
+      }
+
+      .small-custom {
+        color: #fff !important;
+      }
+      .weather-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .location {
+        margin-bottom: 0;
+      }
+
+      #alertPlaceholder {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050; /* Adjust the z-index to be higher than your navbar's z-index */
+      }
+
+      .toast {
+        z-index: 1060;
+      }
+
+      .container {
+        margin: 75px auto;
+        max-width: 500px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      #audioPlayer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: block;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1000;
+        padding: 10px;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+        color: white; /* Ensure the text color is visible */
+      }
+    </style>
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css" />
+    <!-- endinject -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+    <script src="viewer.js" defer></script>
+  </head>
+  <body>
+    <div id="alertPlaceholder"></div>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div
+          class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
+        >
+          <a class="navbar-brand brand-logo mr-5" href="index.html"
+            ><img src="images/logo.png" class="mr-2" alt="logo"
+          /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"
+            ><img src="images/logo-mini.png" alt="logo"
+          /></a>
+        </div>
+        <div
+          class="navbar-menu-wrapper d-flex align-items-center justify-content-end"
+        >
+          <button
+            class="navbar-toggler navbar-toggler align-self-center"
+            type="button"
+            data-toggle="minimize"
+          >
+            <span class="icon-menu"></span>
+          </button>
+          <ul class="navbar-nav mr-lg-2">
+            <li class="nav-item nav-search d-none d-lg-block">
+              <div class="input-group">
+                <div
+                  class="input-group-prepend hover-cursor"
+                  id="navbar-search-icon"
+                >
+                  <span class="input-group-text" id="search">
+                    <i class="icon-search"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="navbar-search-input"
+                  placeholder="Search now"
+                  aria-label="search"
+                  aria-describedby="search"
+                />
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item d-none d-lg-flex">
+              <a
+                class="btn btn-warning"
+                href="https://getlernzy.com"
+                target="_blank"
+              >
+                <i class="icon-unlock mx-0"></i>
+                Go premium
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link count-indicator dropdown-toggle"
+                id="notificationDropdown"
+                href="#"
+                data-toggle="dropdown"
+              >
+                <i class="icon-bell mx-0"></i>
+                <span class="count"></span>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                aria-labelledby="notificationDropdown"
+              >
+                <p class="mb-0 font-weight-normal float-left dropdown-header">
+                  Notifications
+                </p>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-success">
+                      <i class="ti-info-alt mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">
+                      Application Error
+                    </h6>
+                    <p class="font-weight-light small-text mb-0 text-muted">
+                      Just now
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-warning">
+                      <i class="ti-settings mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                    <p class="font-weight-light small-text mb-0 text-muted">
+                      Private message
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-info">
+                      <i class="ti-user mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">
+                      New user registration
+                    </h6>
+                    <p class="font-weight-light small-text mb-0 text-muted">
+                      2 days ago
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item nav-profile dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                data-toggle="dropdown"
+                id="profileDropdown"
+              >
+                <img src="images/faces/face28.jpg" alt="profile" />
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                aria-labelledby="profileDropdown"
+              >
+                <a class="dropdown-item">
+                  <i class="ti-settings text-primary"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item">
+                  <i class="ti-power-off text-primary"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+            <li class="nav-item nav-play">
+              <a class="nav-link" href="#">
+                <i class="icon-play mx-0"></i>
+                <i class="icon-pause mx-0" style="display: none"></i>
+              </a>
+            </li>
+
+            <li class="nav-item nav-settings d-none d-lg-flex">
+              <a class="nav-link" href="#">
+                <i class=""
+                  ><svg
+                    width="30"
+                    height="30"
+                    viewBox="0 0 30 30"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <mask id="path-1-inside-1_426_17151" fill="white">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M20.5 5L21.0771 6.55963C21.4823 7.6545 22.3455 8.51775 23.4404 8.92289L25 9.5L23.4404 10.0771C22.3455 10.4823 21.4823 11.3455 21.0771 12.4404L20.5 14L19.9229 12.4404C19.5177 11.3455 18.6545 10.4823 17.5596 10.0771L16 9.5L17.5596 8.92289C18.6545 8.51775 19.5177 7.6545 19.9229 6.55963L20.5 5ZM11.5 9L12.4577 11.5882C12.9641 12.9568 14.0432 14.0359 15.4118 14.5423L18 15.5L15.4118 16.4577C14.0432 16.9641 12.9641 18.0432 12.4577 19.4118L11.5 22L10.5423 19.4118C10.0359 18.0432 8.9568 16.9641 7.5882 16.4577L5 15.5L7.5882 14.5423C8.9568 14.0359 10.0359 12.9568 10.5423 11.5882L11.5 9ZM20.6016 17.6259L20 16L19.3984 17.6259C19.0945 18.4471 18.4471 19.0945 17.6259 19.3984L16 20L17.6259 20.6016C18.4471 20.9055 19.0945 21.5529 19.3984 22.3741L20 24L20.6016 22.3741C20.9055 21.5529 21.5529 20.9055 22.3741 20.6016L24 20L22.3741 19.3984C21.5529 19.0945 20.9055 18.4471 20.6016 17.6259Z"
+                      ></path>
+                    </mask>
+                    <path
+                      d="M21.0771 6.55963L22.2494 6.12583L22.2494 6.12583L21.0771 6.55963ZM20.5 5L21.6723 4.5662L20.5 1.39807L19.3277 4.5662L20.5 5ZM23.4404 8.92289L23.0066 10.0952L23.4404 8.92289ZM25 9.5L25.4338 10.6723L28.6019 9.5L25.4338 8.32769L25 9.5ZM23.4404 10.0771L23.0066 8.9048V8.9048L23.4404 10.0771ZM21.0771 12.4404L22.2494 12.8742L22.2494 12.8742L21.0771 12.4404ZM20.5 14L19.3277 14.4338L20.5 17.6019L21.6723 14.4338L20.5 14ZM19.9229 12.4404L21.0952 12.0066L19.9229 12.4404ZM17.5596 10.0771L17.9934 8.9048L17.9934 8.9048L17.5596 10.0771ZM16 9.5L15.5662 8.32769L12.3981 9.5L15.5662 10.6723L16 9.5ZM17.5596 8.92289L17.9934 10.0952H17.9934L17.5596 8.92289ZM19.9229 6.55963L18.7506 6.12583V6.12583L19.9229 6.55963ZM12.4577 11.5882L13.63 11.1544L12.4577 11.5882ZM11.5 9L12.6723 8.5662L11.5 5.39807L10.3277 8.5662L11.5 9ZM15.4118 14.5423L15.8456 13.37H15.8456L15.4118 14.5423ZM18 15.5L18.4338 16.6723L21.6019 15.5L18.4338 14.3277L18 15.5ZM15.4118 16.4577L14.978 15.2854L15.4118 16.4577ZM12.4577 19.4118L13.63 19.8456L12.4577 19.4118ZM11.5 22L10.3277 22.4338L11.5 25.6019L12.6723 22.4338L11.5 22ZM10.5423 19.4118L9.36996 19.8456V19.8456L10.5423 19.4118ZM7.5882 16.4577L7.15441 17.63H7.15441L7.5882 16.4577ZM5 15.5L4.5662 14.3277L1.39807 15.5L4.5662 16.6723L5 15.5ZM7.5882 14.5423L7.15441 13.37H7.15441L7.5882 14.5423ZM10.5423 11.5882L9.36996 11.1544L10.5423 11.5882ZM20 16L21.1723 15.5662L20 12.3981L18.8277 15.5662L20 16ZM20.6016 17.6259L21.774 17.1921L21.774 17.1921L20.6016 17.6259ZM19.3984 17.6259L20.5707 18.0597V18.0597L19.3984 17.6259ZM17.6259 19.3984L18.0597 20.5707L17.6259 19.3984ZM16 20L15.5662 18.8277L12.3981 20L15.5662 21.1723L16 20ZM17.6259 20.6016L18.0597 19.4293H18.0597L17.6259 20.6016ZM19.3984 22.3741L20.5707 21.9403L19.3984 22.3741ZM20 24L18.8277 24.4338L20 27.6019L21.1723 24.4338L20 24ZM20.6016 22.3741L19.4293 21.9403L20.6016 22.3741ZM22.3741 20.6016L21.9403 19.4293L22.3741 20.6016ZM24 20L24.4338 21.1723L27.6019 20L24.4338 18.8277L24 20ZM22.3741 19.3984L21.9403 20.5707L22.3741 19.3984ZM22.2494 6.12583L21.6723 4.5662L19.3277 5.4338L19.9048 6.99342L22.2494 6.12583ZM23.8742 7.75057C23.1214 7.47204 22.528 6.87856 22.2494 6.12583L19.9048 6.99342C20.4365 8.43045 21.5696 9.56345 23.0066 10.0952L23.8742 7.75057ZM25.4338 8.32769L23.8742 7.75057L23.0066 10.0952L24.5662 10.6723L25.4338 8.32769ZM23.8742 11.2494L25.4338 10.6723L24.5662 8.32769L23.0066 8.9048L23.8742 11.2494ZM22.2494 12.8742C22.528 12.1214 23.1214 11.528 23.8742 11.2494L23.0066 8.9048C21.5696 9.43655 20.4365 10.5696 19.9048 12.0066L22.2494 12.8742ZM21.6723 14.4338L22.2494 12.8742L19.9048 12.0066L19.3277 13.5662L21.6723 14.4338ZM18.7506 12.8742L19.3277 14.4338L21.6723 13.5662L21.0952 12.0066L18.7506 12.8742ZM17.1258 11.2494C17.8786 11.528 18.472 12.1214 18.7506 12.8742L21.0952 12.0066C20.5635 10.5696 19.4304 9.43655 17.9934 8.9048L17.1258 11.2494ZM15.5662 10.6723L17.1258 11.2494L17.9934 8.9048L16.4338 8.32769L15.5662 10.6723ZM17.1258 7.75057L15.5662 8.32769L16.4338 10.6723L17.9934 10.0952L17.1258 7.75057ZM18.7506 6.12583C18.472 6.87856 17.8786 7.47204 17.1258 7.75057L17.9934 10.0952C19.4304 9.56345 20.5635 8.43045 21.0952 6.99342L18.7506 6.12583ZM19.3277 4.5662L18.7506 6.12583L21.0952 6.99342L21.6723 5.4338L19.3277 4.5662ZM13.63 11.1544L12.6723 8.5662L10.3277 9.4338L11.2854 12.022L13.63 11.1544ZM15.8456 13.37C14.8191 12.9901 14.0099 12.1809 13.63 11.1544L11.2854 12.022C11.9184 13.7327 13.2673 15.0816 14.978 15.7146L15.8456 13.37ZM18.4338 14.3277L15.8456 13.37L14.978 15.7146L17.5662 16.6723L18.4338 14.3277ZM15.8456 17.63L18.4338 16.6723L17.5662 14.3277L14.978 15.2854L15.8456 17.63ZM13.63 19.8456C14.0099 18.8191 14.8191 18.0099 15.8456 17.63L14.978 15.2854C13.2673 15.9184 11.9184 17.2673 11.2854 18.978L13.63 19.8456ZM12.6723 22.4338L13.63 19.8456L11.2854 18.978L10.3277 21.5662L12.6723 22.4338ZM9.36996 19.8456L10.3277 22.4338L12.6723 21.5662L11.7146 18.978L9.36996 19.8456ZM7.15441 17.63C8.18085 18.0099 8.99014 18.8191 9.36996 19.8456L11.7146 18.978C11.0816 17.2673 9.73274 15.9184 8.022 15.2854L7.15441 17.63ZM4.5662 16.6723L7.15441 17.63L8.022 15.2854L5.4338 14.3277L4.5662 16.6723ZM7.15441 13.37L4.5662 14.3277L5.4338 16.6723L8.022 15.7146L7.15441 13.37ZM9.36996 11.1544C8.99014 12.1809 8.18085 12.9901 7.15441 13.37L8.022 15.7146C9.73274 15.0816 11.0816 13.7327 11.7146 12.022L9.36996 11.1544ZM10.3277 8.5662L9.36996 11.1544L11.7146 12.022L12.6723 9.4338L10.3277 8.5662ZM18.8277 16.4338L19.4293 18.0597L21.774 17.1921L21.1723 15.5662L18.8277 16.4338ZM20.5707 18.0597L21.1723 16.4338L18.8277 15.5662L18.226 17.1921L20.5707 18.0597ZM18.0597 20.5707C19.223 20.1402 20.1402 19.223 20.5707 18.0597L18.226 17.1921C18.0488 17.6711 17.6711 18.0488 17.1921 18.226L18.0597 20.5707ZM16.4338 21.1723L18.0597 20.5707L17.1921 18.226L15.5662 18.8277L16.4338 21.1723ZM18.0597 19.4293L16.4338 18.8277L15.5662 21.1723L17.1921 21.774L18.0597 19.4293ZM20.5707 21.9403C20.1402 20.777 19.223 19.8598 18.0597 19.4293L17.1921 21.774C17.6711 21.9512 18.0488 22.3289 18.226 22.8079L20.5707 21.9403ZM21.1723 23.5662L20.5707 21.9403L18.226 22.8079L18.8277 24.4338L21.1723 23.5662ZM19.4293 21.9403L18.8277 23.5662L21.1723 24.4338L21.774 22.8079L19.4293 21.9403ZM21.9403 19.4293C20.777 19.8598 19.8598 20.777 19.4293 21.9403L21.774 22.8079C21.9512 22.3289 22.3289 21.9512 22.8079 21.774L21.9403 19.4293ZM23.5662 18.8277L21.9403 19.4293L22.8079 21.774L24.4338 21.1723L23.5662 18.8277ZM21.9403 20.5707L23.5662 21.1723L24.4338 18.8277L22.8079 18.226L21.9403 20.5707ZM19.4293 18.0597C19.8598 19.223 20.777 20.1402 21.9403 20.5707L22.8079 18.226C22.3289 18.0488 21.9512 17.6711 21.774 17.1921L19.4293 18.0597Z"
+                      fill="currentColor"
+                      mask="url(#path-1-inside-1_426_17151)"
+                    ></path>
+                  </svg>
+                </i>
+              </a>
+            </li>
+          </ul>
+          <button
+            class="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
+            type="button"
+            data-toggle="offcanvas"
+          >
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div class="theme-setting-wrapper">
+          <div id="settings-trigger"><i class="ti-settings"></i></div>
+          <div id="theme-settings" class="settings-panel">
+            <i class="settings-close ti-close"></i>
+            <!-- <p class="settings-heading">SIDEBAR SKINS</p>
+            <div class="sidebar-bg-options selected" id="sidebar-light-theme">
+              <div class="img-ss rounded-circle bg-light border mr-3"></div>
+              Light
+            </div>
+            <div class="sidebar-bg-options" id="sidebar-dark-theme">
+              <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+              Dark
+            </div> -->
+            <p class="settings-heading mt-2">HEADER SKINS</p>
+            <div class="color-tiles mx-2 px-4">
+              <div class="tiles success"></div>
+              <div class="tiles warning"></div>
+              <div class="tiles danger"></div>
+              <div class="tiles info"></div>
+              <div class="tiles dark"></div>
+              <div class="tiles default"></div>
+            </div>
+            <p class="settings-heading mt-2">FONT FAMILY</p>
+            <div class="font-options mt-2 px-4">
+              <select id="font-family-selector" class="form-control">
+                <option value="Arial">Arial</option>
+                <option value="source-serif-pro">source-serif-pro</option>
+                <option value="Cambria">Cambria</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="garamond">Garamond</option>
+                <option value="courier new">Courier New</option>
+                <option value="trebuchet ms">Trebuchet MS</option>
+                <option value="sans-serif">Sans Serif</option>
+              </select>
+            </div>
+
+            <p class="settings-heading mt-2">FONT SIZE</p>
+            <div class="font-size-options mt-2 px-4">
+              <div class="btn-group" role="group" aria-label="Font size">
+                <button
+                  class="btn btn-secondary font-size-btn btn-sm"
+                  data-size="small"
+                >
+                  Small
+                </button>
+                <button
+                  class="btn btn-secondary font-size-btn btn-sm"
+                  data-size="medium"
+                >
+                  Medium
+                </button>
+                <button
+                  class="btn btn-secondary font-size-btn btn-sm"
+                  data-size="large"
+                >
+                  Large
+                </button>
+              </div>
+            </div>
+            <p class="settings-heading mt-2">BACKGROUND COLOR</p>
+            <div class="background-color-options mt-0 px-4">
+              <div class="color-tiles mx-0 px-4">
+                <div
+                  class="tiles bg-color-tile"
+                  data-color="#fdf1e6"
+                  style="background-color: #fdf1e6; border: 1px solid #e2e4e7"
+                ></div>
+                <div
+                  class="tiles bg-color-tile"
+                  data-color="#fff6f3"
+                  style="background-color: #fff6f3; border: 1px solid #e2e4e7"
+                ></div>
+                <div
+                  class="tiles bg-color-tile"
+                  data-color="#ffffff"
+                  style="background-color: #ffffff; border: 1px solid #e2e4e7"
+                ></div>
+                <div
+                  class="tiles bg-color-tile"
+                  data-color="#efefef"
+                  style="background-color: #efefef; border: 1px solid #e2e4e7"
+                ></div>
+              </div>
+            </div>
+            <div class="reset-options mt-2 px-4">
+              <button
+                id="reset-settings"
+                class="btn btn-warning btn-icon-text btn-sm"
+              >
+                <i class="ti-reload btn-icon-prepend"></i>
+                Reset to Default
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="right-sidebar" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                id="todo-tab"
+                data-toggle="tab"
+                href="#summary-section"
+                role="tab"
+                aria-controls="summary-section"
+                aria-expanded="true"
+                >Summary</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                id="chats-tab"
+                data-toggle="tab"
+                href="#key-section"
+                role="tab"
+                aria-controls="chats-section"
+                aria-expanded="true"
+                >Key points</a
+              >
+            </li>
+          </ul>
+          <div
+            class="tab-content"
+            id="youtube-content"
+            style="overflow: auto !important"
+          >
+            <!-- Summary section tab starts -->
+            <div
+              class="tab-pane fade show active scroll-wrapper"
+              id="summary-section"
+              role="tabpanel"
+              aria-labelledby="summary-section"
+            >
+              <div class="events pt-2 px-2">
+                <button
+                  type="button"
+                  id="summarizeButton"
+                  data-id=""
+                  class="btn btn-block btn-outline-secondary btn-m summarize-button"
+                >
+                  Summarize
+                </button>
+                <div class="col-12">
+                  <p
+                    class="mb-0 pt-2 font-weight-thin text-gray"
+                    id="summary"
+                  ></p>
+                </div>
+              </div>
+            </div>
+            <!-- Summary section tab ends -->
+            <!-- Key points and Key insights section tab starts -->
+            <div
+              class="tab-pane fade show scroll-wrapper"
+              id="key-section"
+              role="tabpanel"
+              aria-labelledby="key-section"
+            >
+              <div class="col-12">
+                <p
+                  class="mb-0 pt-2 font-weight-thin text-gray"
+                  id="keypoints"
+                ></p>
+              </div>
+            </div>
+            <!-- Key points and Key insights section tab ends -->
+          </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="saves.html">
+                <i class="icon-archive menu-icon"></i>
+                <span class="menu-title">My saves</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-toggle="collapse"
+                href="#icons"
+                aria-expanded="false"
+                aria-controls="icons"
+              >
+                <i class="icon-star menu-icon"></i>
+                <span class="menu-title">My favorites</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-toggle="collapse"
+                href="#error"
+                aria-expanded="false"
+                aria-controls="error"
+              >
+                <i class="icon-contract menu-icon"></i>
+                <span class="menu-title">My highlights</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin">
+                <div class="row">
+                  <div class="col-12 col-xl-12 mb-4 mb-xl-0">
+                    <h3 class="font-weight-bold" id="contentTitle"></h3>
+                    <h6 class="font-weight-normal mb-0" id="contentAuthor"></h6>
+                    <div class="mb-2">
+                      <span id="contentDate"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-article-image mt-auto">
+                    <img
+                      id="contentImage"
+                      style="display: none"
+                      alt="articleimage"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" id="youtubeContent" style="display: none">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card position-relative">
+                  <div class="card-body">
+                    <ul
+                      class="nav nav-tabs p-2"
+                      id="setting-panel"
+                      role="tablist"
+                    >
+                      <li class="nav-item">
+                        <a
+                          class="nav-link active"
+                          id="chats-tab"
+                          data-toggle="tab"
+                          href="#video-section"
+                          role="tab"
+                          aria-controls="video-section"
+                          aria-selected="false"
+                          >YouTube Video</a
+                        >
+                      </li>
+                      <li class="nav-item">
+                        <a
+                          class="nav-link"
+                          id="todo-tab"
+                          data-toggle="tab"
+                          href="#desc-section"
+                          role="tab"
+                          aria-controls="desc-section"
+                          aria-expanded="true"
+                          aria-selected="true"
+                          >YouTube Description</a
+                        >
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="setting-content">
+                      <div
+                        class="tab-pane fade active show scroll-wrapper ps ps--active-y"
+                        id="video-section"
+                        role="tabpanel"
+                        aria-labelledby="video-section"
+                      >
+                        <div id="youtubeVideo"></div>
+                      </div>
+                      <!-- To do section tab ends -->
+                      <div
+                        class="tab-pane fade"
+                        id="desc-section"
+                        role="tabpanel"
+                        aria-labelledby="desc-section"
+                      >
+                        <div id="youtubeDescription"></div>
+                      </div>
+                      <!-- chat tab ends -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 grid-margin stretch-card">
+                <div class="card position-relative">
+                  <div class="card-body">
+                    <div class="row" style="margin: 112px">
+                      <div
+                        class="col-md-12 col-xl-12 d-flex flex-column justify-content-start px-4"
+                        id="content"
+                      ></div>
+                    </div>
+
+                    <div id="youtubeTranscript" class="p-2"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div
+              class="d-sm-flex justify-content-center justify-content-sm-between"
+            >
+              <span
+                class="text-muted text-center text-sm-left d-block d-sm-inline-block"
+                >Copyright © 2024. Lernzy
+                <a href="https://getlernzy.com/" target="_blank"
+                  >Save, Learn, Grow</a
+                >
+                from Lernzy Team. All rights reserved.</span
+              >
+              <span
+                class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
+                >Hand-crafted & made with
+                <i class="ti-heart text-danger ml-1"></i
+              ></span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <audio id="audioPlayer" crossorigin playsinline></audio>
+
+    <!-- Add Content Modal -->
+    <div
+      class="modal fade"
+      id="addContentModal"
+      tabindex="-1"
+      aria-labelledby="addContentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="addContentForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addContentModalLabel">
+                Save new content
+              </h5>
+              <button
+                type="button"
+                class="ti-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="addUrl" class="form-label">URL</label>
+                <input type="text" class="form-control" id="addUrl" required />
+              </div>
+              <div class="mb-3">
+                <label for="addCategory" class="form-label">Category</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addCategory"
+                  placeholder="Optional"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="addTags" class="form-label">Tags</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addTags"
+                  placeholder="Add tags (optional)"
+                />
+                <div id="addTagsContainer" class="mt-2"></div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- More Content Modal -->
+    <div
+      class="modal fade"
+      id="moreContentModal"
+      tabindex="-1"
+      aria-labelledby="moreContentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="moreContentForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="moreContentModalLabel">
+                Edit Content
+              </h5>
+              <button
+                type="button"
+                class="ti-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="moreContentId" />
+              <div class="mb-3">
+                <label for="moreCategory" class="form-label">Category</label>
+                <input type="text" class="form-control" id="moreCategory" />
+              </div>
+              <div class="mb-3">
+                <label for="moreTags" class="form-label">Tags</label>
+                <input type="text" class="form-control" id="moreTags" />
+                <div id="moreTagsContainer" class="mt-2"></div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Add this inside the <body> tag in viewer.html -->
+      <div id="tooltip" class="tooltip">
+        <button id="highlightButton">Highlight</button>
+        <button id="noteButton">Take Notes</button>
+        <button id="copyButton">Copy</button>
+      </div>
+
+      <!-- Note Modal -->
+      <div id="noteModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Add a Note</h2>
+          <textarea id="noteTextarea" rows="4" cols="50"></textarea>
+          <button id="saveNoteButton">Save Note</button>
+        </div>
+      </div>
+    </div>
+    <!-- plugins:js -->
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+
+    <!-- Plugin js for this page -->
+    <script src="vendors/chart.js/Chart.min.js"></script>
+    <script src="vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="js/dataTables.select.min.js"></script>
+
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="js/dashboard.js"></script>
+
+    <!-- End custom js for this page-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+      const MAX_TOKENS_PER_PART = 200; // Define the maximum number of tokens per chunk
+
+      function splitTranscript(transcript) {
+        const tokens = transcript.split(" ");
+        const parts = [];
+        let currentPart = [];
+
+        tokens.forEach((token) => {
+          if (currentPart.length + token.length <= MAX_TOKENS_PER_PART) {
+            currentPart.push(token);
+          } else {
+            parts.push(currentPart.join(" "));
+            currentPart = [token];
+          }
+        });
+
+        if (currentPart.length > 0) {
+          parts.push(currentPart.join(" "));
+        }
+
+        return parts;
+      }
+
+      function cleanTranscript(text) {
+        return text.replace(/&amp;#39;/g, "'");
+      }
+
+      function renderYouTubeContent(content) {
+        document.getElementById("youtubeDescription").innerText =
+          content.description;
+
+        const transcriptElement = document.getElementById("youtubeTranscript");
+        transcriptElement.innerHTML = ""; // Clear previous content
+
+        const cleanedTranscript = cleanTranscript(content.transcript); // Clean the transcript
+        const splitTranscripts = splitTranscript(cleanedTranscript); // Split the cleaned transcript
+
+        splitTranscripts.forEach((part, index) => {
+          const row = document.createElement("div");
+          row.classList.add("row", "mb-2");
+
+          const timestampColumn = document.createElement("div");
+          timestampColumn.classList.add("col-2");
+          timestampColumn.innerText = `Part ${index + 1}`;
+
+          const transcriptColumn = document.createElement("div");
+          transcriptColumn.classList.add("col-10");
+          transcriptColumn.innerText = part;
+
+          row.appendChild(timestampColumn);
+          row.appendChild(transcriptColumn);
+          transcriptElement.appendChild(row);
+        });
+
+        const videoId = new URL(content.url).searchParams.get("v");
+        const iframe = document.createElement("iframe");
+        iframe.width = "560";
+        iframe.height = "315";
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        iframe.title = "YouTube video player";
+        iframe.frameBorder = "0";
+        iframe.allow =
+          "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        document.getElementById("youtubeVideo").appendChild(iframe);
+      }
+
+      async function fetchContent() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const contentId = urlParams.get("id");
+
+        if (!contentId) {
+          document.getElementById("content").innerText =
+            "Content ID is missing";
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/content/${contentId}`
+          );
+          if (!response.ok) {
+            throw new Error(`Error fetching content: ${response.statusText}`);
+          }
+
+          const content = await response.json();
+          renderContent(content);
+        } catch (error) {
+          console.error(error);
+          document.getElementById("content").innerText =
+            "Error fetching content: " + error.message;
+        }
+      }
+
+      function renderContent(content) {
+        document.getElementById("contentTitle").innerText = content.title;
+        document.getElementById(
+          "contentAuthor"
+        ).innerText = `Author: ${content.author}`;
+        document.getElementById(
+          "contentDate"
+        ).innerText = `Published on: ${new Date(
+          content.publishDate
+        ).toLocaleDateString()}`;
+
+        const contentImage = document.getElementById("contentImage");
+        if (content.imageUrl) {
+          contentImage.src = content.imageUrl;
+          contentImage.style.display = "block";
+        } else {
+          contentImage.style.display = "none";
+        }
+
+        if (content.contentType === "YouTube") {
+          document.getElementById("content").style.display = "none";
+          document.getElementById("youtubeContent").style.display = "block";
+          renderYouTubeContent(content);
+        } else {
+          document.getElementById("content").style.display = "block";
+          document.getElementById("youtubeContent").style.display = "none";
+          renderStructuredContent(content.structuredContent);
+        }
+      }
+
+      function renderStructuredContent(structuredContent) {
+        const contentDiv = document.getElementById("content");
+        contentDiv.innerHTML = "";
+
+        structuredContent.forEach((item) => {
+          let element;
+          switch (item.type) {
+            case "paragraph":
+              element = document.createElement("p");
+              element.innerHTML = item.content;
+              break;
+            case "image":
+              element = document.createElement("img");
+              element.src = item.url;
+              element.alt = item.caption;
+              break;
+            case "link":
+              element = document.createElement("a");
+              element.href = item.url;
+              element.innerHTML = item.content;
+              break;
+            case "heading":
+              element = document.createElement(`h${item.level}`);
+              element.innerText = item.content;
+              break;
+            case "blockquote":
+              element = document.createElement("blockquote");
+              element.innerHTML = item.content;
+              break;
+            case "list":
+              element = document.createElement(item.ordered ? "ol" : "ul");
+              item.items.forEach((listItem) => {
+                const li = document.createElement("li");
+                li.innerHTML = listItem;
+                element.appendChild(li);
+              });
+              break;
+          }
+          contentDiv.appendChild(element);
+        });
+      }
+
+      fetchContent();
+    </script>
+
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+    <script>
+      const player = new Plyr("#audioPlayer");
+    </script>
+  </body>
+</html>

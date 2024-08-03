@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Lernzy | Mahdi, Welcome to your dashboard!</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="vendors/feather/feather.css" />
+    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css" />
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css" />
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link
+      rel="stylesheet"
+      href="vendors/datatables.net-bs4/dataTables.bootstrap4.css"
+    />
+    <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="js/select.dataTables.min.css"
+    />
+    <style>
+      .card-people {
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .card-people .image-wrapper {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .card-people img {
+        width: 100%;
+        height: 200px;
+        display: block;
+        border-radius: 20px; /* Ensure the image itself is rounded */
+      }
+
+      .card-people .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(43, 24, 151, 0.5); /* semi-transparent black */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border-radius: 20px; /* Match the border radius of the image */
+      }
+
+      .small-custom {
+        color: #fff !important;
+      }
+      .weather-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .location {
+        margin-bottom: 0;
+      }
+
+      #alertPlaceholder {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050; /* Adjust the z-index to be higher than your navbar's z-index */
+      }
+
+      .toast {
+        z-index: 1060;
+      }
+    </style>
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css" />
+    <!-- endinject -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="images/site.webmanifest" />
+  </head>
+  <body>
+    <div id="alertPlaceholder"></div>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div
+          class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"
+        >
+          <a class="navbar-brand brand-logo mr-5" href="index.html"
+            ><img src="images/logo.png" class="mr-2" alt="logo"
+          /></a>
+          <a class="navbar-brand brand-logo-mini" href="index.html"
+            ><img src="images/logo-mini.png" alt="logo"
+          /></a>
+        </div>
+        <div
+          class="navbar-menu-wrapper d-flex align-items-center justify-content-end"
+        >
+          <button
+            class="navbar-toggler navbar-toggler align-self-center"
+            type="button"
+            data-toggle="minimize"
+          >
+            <span class="icon-menu"></span>
+          </button>
+          <ul class="navbar-nav mr-lg-2">
+            <li class="nav-item nav-search d-none d-lg-block">
+              <div class="input-group">
+                <div
+                  class="input-group-prepend hover-cursor"
+                  id="navbar-search-icon"
+                >
+                  <span class="input-group-text" id="search">
+                    <i class="icon-search"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="navbar-search-input"
+                  placeholder="Search now"
+                  aria-label="search"
+                  aria-describedby="search"
+                />
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item d-none d-lg-flex">
+              <a
+                class="btn btn-warning"
+                href="https://getlernzy.com"
+                target="_blank"
+              >
+                <i class="icon-unlock mx-0"></i>
+                Go premium
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link count-indicator dropdown-toggle"
+                id="notificationDropdown"
+                href="#"
+                data-toggle="dropdown"
+              >
+                <i class="icon-bell mx-0"></i>
+                <span class="count"></span>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                aria-labelledby="notificationDropdown"
+              >
+                <p class="mb-0 font-weight-normal float-left dropdown-header">
+                  Notifications
+                </p>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-success">
+                      <i class="ti-info-alt mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">
+                      Application Error
+                    </h6>
+                    <p class="font-weight-light small-text mb-0 text-muted">
+                      Just now
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-warning">
+                      <i class="ti-settings mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">Settings</h6>
+                    <p class="font-weight-light small-text mb-0 text-muted">
+                      Private message
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-info">
+                      <i class="ti-user mx-0"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <h6 class="preview-subject font-weight-normal">
+                      New user registration
+                    </h6>
+                    <p class="font-weight-light small-text mb-0 text-muted">
+                      2 days ago
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item nav-profile dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                data-toggle="dropdown"
+                id="profileDropdown"
+              >
+                <img src="images/faces/face28.jpg" alt="profile" />
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right navbar-dropdown"
+                aria-labelledby="profileDropdown"
+              >
+                <a class="dropdown-item">
+                  <i class="ti-settings text-primary"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item">
+                  <i class="ti-power-off text-primary"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+          <button
+            class="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
+            type="button"
+            data-toggle="offcanvas"
+          >
+            <span class="icon-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">
+                <i class="icon-grid menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="saves.html">
+                <i class="icon-archive menu-icon"></i>
+                <span class="menu-title">My saves</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-toggle="collapse"
+                href="#icons"
+                aria-expanded="false"
+                aria-controls="icons"
+              >
+                <i class="icon-star menu-icon"></i>
+                <span class="menu-title">My favorites</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                data-toggle="collapse"
+                href="#error"
+                aria-expanded="false"
+                aria-controls="error"
+              >
+                <i class="icon-contract menu-icon"></i>
+                <span class="menu-title">My highlights</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="row">
+              <div class="col-md-12 grid-margin">
+                <div class="row">
+                  <div class="col-12 col-xl-12 mb-4 mb-xl-0">
+                    <h3 class="font-weight-bold">Your saved content</h3>
+                    <h6 class="font-weight-normal mb-0">
+                      You can see all your saved content on this page.
+                      <span class="text-primary"></span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="col-md-12 grid-margin">
+                <div class="template-demo">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-light">
+                      Content type
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split"
+                      id="dropdownMenuSplitButton1"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuSplitButton1"
+                    >
+                      <h6 class="dropdown-header">Sort by content</h6>
+                      <a class="dropdown-item" href="#">PDF</a>
+                      <a class="dropdown-item" href="#">Wep Page</a>
+                      <a class="dropdown-item" href="#">YouTube</a>
+                      <a class="dropdown-item" href="#">Podcasts</a>
+                    </div>
+                  </div>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-light btn-sm">
+                      Sort By
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-light btn-sm dropdown-toggle dropdown-toggle-split"
+                      id="dropdownMenuSplitButton1"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuSplitButton1"
+                    >
+                      <h6 class="dropdown-header">Date added</h6>
+                      <a class="dropdown-item" href="#">Newest first</a>
+                      <a class="dropdown-item" href="#">Oldest first</a>
+                      <div class="dropdown-divider"></div>
+                      <h6 class="dropdown-header">Length</h6>
+                      <a class="dropdown-item" href="#">Shortest</a>
+                      <a class="dropdown-item" href="#">Longest</a>
+                      <div class="dropdown-divider"></div>
+                      <h6 class="dropdown-header">Length</h6>
+                      <a class="dropdown-item" href="#">Newest first</a>
+                      <a class="dropdown-item" href="#">Oldest first</a>
+                    </div>
+                  </div>
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      id="dropdownMenuDate2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addContentModal"
+                      aria-haspopup="true"
+                      aria-expanded="true"
+                      class="btn btn-sm btn-primary btn-icon-text"
+                    >
+                      <i class="ti-download btn-icon-prepend"></i>
+                      Save new content
+                    </button>
+                  </div>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-secondary">
+                      Integrate
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split"
+                      id="dropdownMenuSplitButton1"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuSplitButton1"
+                    >
+                      <h6 class="dropdown-header">Import Content</h6>
+                      <a class="dropdown-item" href="#" id="importPocket"
+                        >Pocket App</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" id="contentList"></div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div
+              class="d-sm-flex justify-content-center justify-content-sm-between"
+            >
+              <span
+                class="text-muted text-center text-sm-left d-block d-sm-inline-block"
+                >Copyright © 2024. Lernzy
+                <a href="https://getlernzy.com/" target="_blank"
+                  >Save, Learn, Grow</a
+                >
+                from Lernzy Team. All rights reserved.</span
+              >
+              <span
+                class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"
+                >Hand-crafted & made with
+                <i class="ti-heart text-danger ml-1"></i
+              ></span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- Add Content Modal -->
+    <div
+      class="modal fade"
+      id="addContentModal"
+      tabindex="-1"
+      aria-labelledby="addContentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="addContentForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addContentModalLabel">
+                Save new content
+              </h5>
+              <button
+                type="button"
+                class="ti-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="addUrl" class="form-label">URL</label>
+                <input type="text" class="form-control" id="addUrl" required />
+              </div>
+              <div class="mb-3">
+                <label for="addCategory" class="form-label">Category</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addCategory"
+                  placeholder="Optional"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="addTags" class="form-label">Tags</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="addTags"
+                  placeholder="Add tags (optional)"
+                />
+                <div id="addTagsContainer" class="mt-2"></div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- More Content Modal -->
+    <div
+      class="modal fade"
+      id="moreContentModal"
+      tabindex="-1"
+      aria-labelledby="moreContentModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="moreContentForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="moreContentModalLabel">
+                Edit Content
+              </h5>
+              <button
+                type="button"
+                class="ti-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="moreContentId" />
+              <div class="mb-3">
+                <label for="moreCategory" class="form-label">Category</label>
+                <input type="text" class="form-control" id="moreCategory" />
+              </div>
+              <div class="mb-3">
+                <label for="moreTags" class="form-label">Tags</label>
+                <input type="text" class="form-control" id="moreTags" />
+                <div id="moreTagsContainer" class="mt-2"></div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- plugins:js -->
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="vendors/chart.js/Chart.min.js"></script>
+    <script src="vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="js/dataTables.select.min.js"></script>
+
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/template.js"></script>
+    <script src="js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="js/dashboard.js"></script>
+    <script src="js/Chart.roundedBarCharts.js"></script>
+    <!-- End custom js for this page-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js?v=1.0" defer></script>
+    <script src="truncate.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>
+  </body>
+</html>

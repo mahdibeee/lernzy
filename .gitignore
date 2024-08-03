@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Environment files
+auth-service/.env
+backend/.env
+backend/env/
+
+# Python cache
+**/__pycache__/
+
+# Miscellaneous
+*.log
+*.lock
+*.tmp
+*.swp
+.DS_Store
