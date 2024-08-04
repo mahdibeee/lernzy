@@ -11,6 +11,10 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="vendors/feather/feather.css" />
     <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css" />
+    <link
+      rel="stylesheet"
+      href="/vendors/mdi/css/materialdesignicons.min.css"
+    />
     <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css" />
     <!-- endinject -->
     <!-- Plugin css for this page -->
@@ -104,6 +108,10 @@
       href="images/favicon-16x16.png"
     />
     <link rel="manifest" href="images/site.webmanifest" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.0/lazysizes.min.js"
+      async
+    ></script>
   </head>
   <body>
     <div id="alertPlaceholder"></div>
@@ -379,20 +387,6 @@
                     </div>
                   </div>
                   <div class="btn-group">
-                    <button
-                      type="button"
-                      id="dropdownMenuDate2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#addContentModal"
-                      aria-haspopup="true"
-                      aria-expanded="true"
-                      class="btn btn-sm btn-primary btn-icon-text"
-                    >
-                      <i class="ti-download btn-icon-prepend"></i>
-                      Save new content
-                    </button>
-                  </div>
-                  <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-secondary">
                       Integrate
                     </button>
@@ -412,9 +406,23 @@
                     >
                       <h6 class="dropdown-header">Import Content</h6>
                       <a class="dropdown-item" href="#" id="importPocket"
-                        >Pocket App</a
+                        ><i class="mdi mdi-pocket"></i> Pocket App</a
                       >
                     </div>
+                  </div>
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      id="dropdownMenuDate2"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addContentModal"
+                      aria-haspopup="true"
+                      aria-expanded="true"
+                      class="btn btn-sm btn-primary btn-icon-text"
+                    >
+                      <i class="ti-download btn-icon-prepend"></i>
+                      Save new content
+                    </button>
                   </div>
                 </div>
               </div>

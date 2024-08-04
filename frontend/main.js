@@ -541,9 +541,9 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
           <div class="card-people mt-auto">
             <div class="image-wrapper">
-              <img src="${item.imageUrl || "default-thumbnail.png"}" alt="${
-      item.title
-    }">
+              <img loading="lazy" class="lazyload" data-src="${
+                item.imageUrl || "default-thumbnail.png"
+              }" alt="${item.title}">
               <div class="overlay">
                 <div class="weather-info">
                   <div class="d-flex">
